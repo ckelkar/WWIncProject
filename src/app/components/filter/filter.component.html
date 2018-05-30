@@ -1,3 +1,45 @@
-<p>
-  filter works!
-</p>
+
+<form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
+  <label>City *</label>
+  <input type="text" [formControlName]="'city'" class="form-control" placeholder="Enter City Name">
+  <div *ngIf="inputForm.controls['city'].errors?.required" class="ul error message">City is required</div>
+  <br>
+  <input type="submit" class="btn btn-success" value="submit" style="float: right;" [disabled]="!inputForm.valid">
+
+</form>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<form [formGroup]="additionalForm" (ngSubmit)="getRestaurantResults()" *ngIf="cityList && cityList.length !=0">
+  <label >Cities</label>
+  <angular2-multiselect [data]="cityList" [(ngModel)]="selectedCity"
+                        [settings]="cityListDropdownSetting" (onSelect)="getCuisines($event)" [formControlName]="'restaurantCity'">
+
+  </angular2-multiselect>
+  <br>
+  <br>
+  <label >Categories</label>
+  <angular2-multiselect [data]="categoryList" [(ngModel)]="selectedCategory"
+                        [settings]="categoryListDropDownSetting" [formControlName]="'restaurantCategory'"></angular2-multiselect>
+
+  <br>
+  <br>
+  <div *ngIf="cuisinesList && cuisinesList.length !=0">
+    <label>Cuisines</label>
+  <angular2-multiselect [data]="cuisinesList" [(ngModel)]="selectedCuisine"
+                        [settings]="cuisinesListDropDownSetting" [formControlName]="'restaurantCuisine'"></angular2-multiselect>
+  </div>
+  <br>
+  <input type="submit" class="btn btn-success" value="Get Restaurants" style="float: right;">
+</form>
+
+
+

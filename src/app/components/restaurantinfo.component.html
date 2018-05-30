@@ -1,3 +1,26 @@
-<app-filter></app-filter>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <app-filter [cityListDropdownSetting]="cityListDropdownSetting" [cityList]="cityList"
+                  [categoryList]="categoryList" [categoryListDropDownSetting]="categoryListDropdownSetting"
+      (citySubmitted)="fetchCities($event)"
+                  (citySelected)="getCuisines($event)"
+                  (paramsSelected)="getRestaurantInfo($event)"
+                  [cuisinesList]="cuisineList" [cuisinesListDropDownSetting]="cuisineListDropdownSetting"></app-filter>
 
-<app-restaurantresults></app-restaurantresults>
+    </div>
+    <div class="col-md-10">
+
+
+            <app-restaurantresults [restaurants]="restaurants"></app-restaurantresults>
+
+
+     
+
+    </div>
+  </div>
+</div>
+
+
+
+
