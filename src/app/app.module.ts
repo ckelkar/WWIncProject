@@ -37,7 +37,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AngularMultiSelectModule,
     ReactiveFormsModule,
     CardModule,
-    NgbModule
+    NgbModule.forRoot()
   ],
   providers: [
     {
