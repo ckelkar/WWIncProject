@@ -1,6 +1,8 @@
+
+
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
       <app-filter [cityListDropdownSetting]="cityListDropdownSetting" [cityList]="cityList"
                   [categoryList]="categoryList" [categoryListDropDownSetting]="categoryListDropdownSetting"
       (citySubmitted)="fetchCities($event)"
@@ -9,17 +11,13 @@
                   [cuisinesList]="cuisineList" [cuisinesListDropDownSetting]="cuisineListDropdownSetting"></app-filter>
 
     </div>
-    <div class="col-md-10">
-
-
+    <div class="col-md-9">
             <app-restaurantresults [restaurants]="restaurants"></app-restaurantresults>
-
-
-     
-
     </div>
   </div>
 </div>
+
+
 
 
 

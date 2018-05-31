@@ -6,11 +6,18 @@ import {Observable} from 'rxjs/Observable';
 import {reduce, flatMap} from 'rxjs/operators';
 import {from} from 'rxjs/observable/from';
 import {InputParams} from '../models/input-params';
+import {map} from 'rxjs/operator/map';
 
 
 
 @Injectable()
 export class ZomatoapiService {
+
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json' ,
+    'user-key': this.config.ZOMATO_API_KEY
+  });
+
   constructor(@Inject(CONFIG) private config: IAppConfig , private http: HttpClient) {
 
   }
@@ -19,7 +26,8 @@ export class ZomatoapiService {
 
     let params = new HttpParams();
 
-    let api_url = 'https://developers.zomato.com/api/v2.1/search';
+    const api_url = 'https://developers.zomato.com/api/v2.1/search';
+
 
     params = params.append('entity_id' , parameters.location.toString());
     params = params.append('category', parameters.category.toString());
@@ -28,11 +36,8 @@ export class ZomatoapiService {
     params = params.append('count', parameters.limit.toString());
     params = params.append('entity_type', 'city');
 
-    let restaurants= this.http.get(api_url , {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json' ,
-        'user-key': this.config.ZOMATO_API_KEY
-      }) ,
+    const restaurants = this.http.get(api_url , {
+      headers: this.headers,
       params: params
     }).pipe(
       flatMap((response: any) => from(response.restaurants)),
@@ -49,15 +54,11 @@ export class ZomatoapiService {
   }
 
   getCategories(): Observable<any> {
-    let params = new HttpParams();
-    let api_url = 'https://developers.zomato.com/api/v2.1/categories';
+    const api_url = 'https://developers.zomato.com/api/v2.1/categories';
 
     const categories = this.http.get(api_url ,
       {
-        headers: new HttpHeaders({
-          'Content-Type': 'application/json' ,
-          'user-key': this.config.ZOMATO_API_KEY
-        })
+        headers: this.headers
       }).pipe(
       flatMap((response: any) => from(response.categories)),
       reduce((acc, cur) => {
@@ -75,14 +76,11 @@ export class ZomatoapiService {
   }
 
   searchLocations(q: string): Observable<any> {
-    let params = new HttpParams();
-    let api_url = 'https://developers.zomato.com/api/v2.1/cities';
+    const params = new HttpParams();
+    const api_url = 'https://developers.zomato.com/api/v2.1/cities';
 
     const cities = this.http.get(api_url , {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json' ,
-        'user-key': this.config.ZOMATO_API_KEY
-      }) ,
+      headers: this.headers,
       params: params.append('q' , q)
     }).pipe(
       flatMap((response: any) => from(response.location_suggestions)),
@@ -101,15 +99,12 @@ export class ZomatoapiService {
 
   getCuisines(id: number, city: string): Observable<any> {
     let params = new HttpParams();
-    let api_url = 'https://developers.zomato.com/api/v2.1/cuisines';
+    const api_url = 'https://developers.zomato.com/api/v2.1/cuisines';
 
     params = params.append('city_id' , id.toString());
 
     const cousines = this.http.get(api_url , {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json' ,
-        'user-key': this.config.ZOMATO_API_KEY
-      }) ,
+      headers: this.headers ,
       params: params
     }).pipe(
       flatMap((response: any) => from(response.cuisines)),

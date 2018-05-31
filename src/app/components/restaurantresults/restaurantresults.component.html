@@ -1,17 +1,24 @@
+<ngb-pagination [collectionSize]="">
+
+</ngb-pagination>
+
+<div *ngIf="restaurants && restaurants?.length !== 0">
 <div class="card-container">
-<div *ngFor="let restaurant of restaurants">
-  <article class="card">
-    <header class="card__title">
-      <h3>{{restaurant?.name}}</h3>
-    </header>
-    <figure class="card__thumbnail">
+      <div *ngFor="let restaurant of restaurants">
+        <article class="card">
+          <header class="card__title">
+            <h3>{{restaurant?.name}}</h3>
+          </header>
+          <figure class="card__thumbnail">
 
-    </figure>
-    <main class="card__description">
-      {{restaurant?.location?.address}}
-    </main>
+          </figure>
+          <main class="card__description">
+            {{restaurant?.location?.address}}
+          </main>
 
-  </article>
+        </article>
+      </div>
+  </div>
 </div>
+<div *ngIf="restaurants?.length === 0">Please select another filter</div>
 
-</div>

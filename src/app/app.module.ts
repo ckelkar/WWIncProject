@@ -13,7 +13,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown';
-import {CardModule} from 'primeng/card'
+import {CardModule} from 'primeng/card';
+import {DatapassingService} from './services/datapassing.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -34,14 +36,15 @@ import {CardModule} from 'primeng/card'
     MultiselectDropdownModule,
     AngularMultiSelectModule,
     ReactiveFormsModule,
-    CardModule
+    CardModule,
+    NgbModule
   ],
   providers: [
     {
       provide: CONFIG,
       useValue: APP_SETTINGS
     },
-    [ZomatoapiService]
+    [ZomatoapiService,DatapassingService]
   ],
   bootstrap: [AppComponent]
 })
