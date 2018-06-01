@@ -44,7 +44,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
       provide: CONFIG,
       useValue: APP_SETTINGS
     },
-    [ZomatoapiService,DatapassingService]
+    [ZomatoapiService, DatapassingService]
   ],
   bootstrap: [AppComponent]
 })

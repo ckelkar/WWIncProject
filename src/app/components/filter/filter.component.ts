@@ -1,9 +1,7 @@
 import {Component , EventEmitter , Input , OnDestroy , OnInit , Output} from '@angular/core';
 import {FormBuilder , FormControl , FormGroup , Validators} from '@angular/forms';
 import {InputParams} from '../../models/input-params';
-import {isNullOrUndefined} from 'util';
 import {DatapassingService} from '../../services/datapassing.service';
-import {ISubscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-filter',
@@ -12,6 +10,7 @@ import {ISubscription} from 'rxjs/Subscription';
 })
 export class FilterComponent implements OnInit {
   enteredCity: string;
+
 
   @Output() public citySubmitted = new EventEmitter<string>(); // city enterted and hit submit
   @Output() public citySelected = new EventEmitter<any>(); // selected city from dropdownlist
@@ -52,6 +51,7 @@ export class FilterComponent implements OnInit {
 
   // accepts entered city and pass it to the parent
   onSubmit() {
+
     this.additionalForm.reset();
     this.enteredCity = this.inputForm.get('city').value;
     this.citySubmitted.emit(this.enteredCity);
@@ -66,10 +66,11 @@ export class FilterComponent implements OnInit {
 
   // gets filtered restaurants
   getRestaurantResults() {
+    console.log(this.additionalForm.get('restaurantCategory'));
     var filterParams = new InputParams();
-    const selectedlocation = this.additionalForm.get('restaurantCity').value.length !== 0 ? this.additionalForm.get('restaurantCity').value[0].id : '';
-    const selectedCategory = this.additionalForm.get('restaurantCategory').value.length !== 0  ? this.additionalForm.get('restaurantCategory').value[0].id : '';
-    const selectedCuisine = this.additionalForm.get('restaurantCuisine').value.length !== 0 ? this.additionalForm.get('restaurantCuisine').value[0].id : ''
+    const selectedlocation = this.additionalForm.get('restaurantCity').value !== null ? (this.additionalForm.get('restaurantCity').value.length !== 0 ? this.additionalForm.get('restaurantCity').value[0].id : '') : '';
+    const selectedCategory = this.additionalForm.get('restaurantCategory').value !== null ? (this.additionalForm.get('restaurantCategory').value.length !== 0  ? this.additionalForm.get('restaurantCategory').value[0].id : '') : '';
+    const selectedCuisine = this.additionalForm.get('restaurantCuisine').value !== null ? (this.additionalForm.get('restaurantCuisine').value.length !== 0 ? this.additionalForm.get('restaurantCuisine').value[0].id : '') : '';
 
     filterParams = Object.assign({}, filterParams, {location: selectedlocation,
       category: selectedCategory, cuisine: selectedCuisine});
@@ -81,8 +82,16 @@ export class FilterComponent implements OnInit {
     this.inputForm.reset();
     this.additionalForm.reset();
     this.cityList = [];
+    this.cuisinesList = [];
+    this.categoryList = [];
     this._dataPassingService.nullifyArray(true);
+
   }
+
+  pageRefresh() {
+
+  }
+
 
 
 

@@ -5,7 +5,7 @@
       <form [formGroup]="inputForm" (ngSubmit)="onSubmit()">
         <label>City *</label>
         <input type="text" [formControlName]="'city'" class="form-control" placeholder="Enter City Name">
-        <div *ngIf="inputForm.controls['city'].errors?.required" class="ul error message">City is required</div>
+        <div *ngIf="inputForm.controls['city'].errors?.required"  class="ul error message">City is required</div>
         <div *ngIf="cityList?.length ==0" class="ul error message">Please enter valid city name</div>
         <br>
         <input type="submit" class="btn btn-success" value="submit" style="float: right;" [disabled]="!inputForm.valid">
@@ -43,6 +43,7 @@
           </div>
 
         </div>
+
 
 
       </form>
