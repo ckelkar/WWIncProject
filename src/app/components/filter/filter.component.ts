@@ -13,23 +13,23 @@ import {ISubscription} from 'rxjs/Subscription';
 export class FilterComponent implements OnInit {
   enteredCity: string;
 
-  @Output() public citySubmitted = new EventEmitter<string>();
-  @Output() public citySelected = new EventEmitter<any>();
-  @Output() public paramsSelected = new EventEmitter<InputParams>();
+  @Output() public citySubmitted = new EventEmitter<string>(); // city enterted and hit submit
+  @Output() public citySelected = new EventEmitter<any>(); // selected city from dropdownlist
+  @Output() public paramsSelected = new EventEmitter<InputParams>(); // selected filter parameters
 
 
-  @Input() cityList = [];
-  selectedCity = [];
-  @Input() cityListDropdownSetting = [];
+  @Input() cityList = []; // list of cities
+  selectedCity = []; // selected city
+  @Input() cityListDropdownSetting = []; // city list dropdownsetting
 
 
-  @Input() categoryList = [];
-  selectedCategory = [];
-  @Input() categoryListDropDownSetting = {};
+  @Input() categoryList = []; // list of categories
+  selectedCategory = []; // selected category
+  @Input() categoryListDropDownSetting = {}; // categorty list dropdownsetting
 
-  @Input() cuisinesList = [];
-  selectedCuisine = [];
-  @Input() cuisinesListDropDownSetting = {};
+  @Input() cuisinesList = []; // cuisine list
+  selectedCuisine = []; // selected cuisine
+  @Input() cuisinesListDropDownSetting = {}; // cuisine list dropdownsetting
 
   inputForm: FormGroup;
   additionalForm: FormGroup;
@@ -50,22 +50,23 @@ export class FilterComponent implements OnInit {
     });
   }
 
+  // accepts entered city and pass it to the parent
   onSubmit() {
     this.additionalForm.reset();
     this.enteredCity = this.inputForm.get('city').value;
     this.citySubmitted.emit(this.enteredCity);
-    console.log(this.enteredCity);
 
 
   }
 
+  // gets cuisine list
   getCuisines(selectedCity: any) {
     this.citySelected.emit(selectedCity);
   }
 
+  // gets filtered restaurants
   getRestaurantResults() {
     var filterParams = new InputParams();
-    console.log(this.additionalForm.get('restaurantCuisine'));
     const selectedlocation = this.additionalForm.get('restaurantCity').value.length !== 0 ? this.additionalForm.get('restaurantCity').value[0].id : '';
     const selectedCategory = this.additionalForm.get('restaurantCategory').value.length !== 0  ? this.additionalForm.get('restaurantCategory').value[0].id : '';
     const selectedCuisine = this.additionalForm.get('restaurantCuisine').value.length !== 0 ? this.additionalForm.get('restaurantCuisine').value[0].id : ''
@@ -73,9 +74,9 @@ export class FilterComponent implements OnInit {
     filterParams = Object.assign({}, filterParams, {location: selectedlocation,
       category: selectedCategory, cuisine: selectedCuisine});
     this.paramsSelected.emit(filterParams);
-    console.log(filterParams);
   }
 
+  // resets filter
   ResetForm(){
     this.inputForm.reset();
     this.additionalForm.reset();

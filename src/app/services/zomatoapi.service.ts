@@ -40,11 +40,15 @@ export class ZomatoapiService {
       headers: this.headers,
       params: params
     }).pipe(
+
       flatMap((response: any) => from(response.restaurants)),
       reduce((acc, cur) => {
         const newObj = {
           name: (cur as any).restaurant.name,
           location: (cur as any).restaurant.location,
+          photos: (cur as any).restaurant.photos_url,
+          menu : (cur as any).restaurant.menu_url,
+          image: (cur as any).restaurant.featured_image
         }
         acc.push(newObj);
         return acc;

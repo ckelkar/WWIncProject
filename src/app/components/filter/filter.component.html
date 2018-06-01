@@ -34,9 +34,14 @@
                                 [settings]="cuisinesListDropDownSetting" [formControlName]="'restaurantCuisine'"></angular2-multiselect>
 
           <br>
-          <input type="submit" class="btn btn-success" value="Get Restaurants" style="float: right;">
+          <div class="row">
+            <div class="col-sm-12 text-center">
+              <input type="button" class="btn btn-danger" value="Reset Filter" style="float: left;" (click)="ResetForm()" style="width:150px">
+              <input type="submit" class="btn btn-success" value="Get Restaurants" style="float: right;" style="width:150px">
 
-          <input type="button" class="btn btn-danger" value="Reset Filter" style="float: left;" (click)="ResetForm()">
+            </div>
+          </div>
+
         </div>
 
 

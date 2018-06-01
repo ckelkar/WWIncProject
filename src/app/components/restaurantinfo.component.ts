@@ -15,16 +15,16 @@ import {ISubscription} from 'rxjs/Subscription';
 
 export class RestaurantinfoComponent implements OnInit,OnDestroy {
 
-  public cityList;
-  public cityListDropdownSetting;
+  public cityList; // gets relevant city list from API
+  public cityListDropdownSetting; // dropdown setting for city list
 
-  public categoryList;
-  public categoryListDropdownSetting;
+  public categoryList; // gets category list from API
+  public categoryListDropdownSetting; // dropdown setting for category list
 
-  public cuisineList;
-  public cuisineListDropdownSetting;
+  public cuisineList; // gets cuisine list from API
+  public cuisineListDropdownSetting; // dropdown setting for cuisine list
 
-  public restaurants;
+  public restaurants; // gets all the filtered restaurant info
 
   private ZomatoAPIServiceSubscription: ISubscription;
 
@@ -36,10 +36,12 @@ export class RestaurantinfoComponent implements OnInit,OnDestroy {
   }
 
 
-
+// fetches relevant cities of entered query and creates list
   fetchCities(city: string) {
-    this.ZomatoAPIServiceSubscription= this._zomatoApiService.searchLocations(city).subscribe(cities => {
+    this.ZomatoAPIServiceSubscription = this._zomatoApiService.searchLocations(city).subscribe(cities => {
       this.cityList = cities;
+
+      // city list dropdown setting
       this.cityListDropdownSetting = {
         singleSelection: true ,
         text: 'Select City' ,
@@ -55,9 +57,9 @@ export class RestaurantinfoComponent implements OnInit,OnDestroy {
 
     this.ZomatoAPIServiceSubscription = this._zomatoApiService.getCategories().subscribe(data => {
       this.categoryList = data;
-      console.log(this.categoryList);
     });
 
+    // category list dropdown setting
     this.categoryListDropdownSetting = {
       singleSelection: true ,
       text: 'Select Category' ,
@@ -68,9 +70,12 @@ export class RestaurantinfoComponent implements OnInit,OnDestroy {
     };
   }
 
+  // fetches cuisines
   getCuisines(cityAndId: any) {
     this.ZomatoAPIServiceSubscription = this._zomatoApiService.getCuisines(cityAndId.id , cityAndId.itemName).subscribe(data => {
       this.cuisineList = data;
+
+      // cuisine list dropdown setting
       this.cuisineListDropdownSetting = {
         singleSelection: true ,
         text: 'Select Cuisines' ,
@@ -85,19 +90,18 @@ export class RestaurantinfoComponent implements OnInit,OnDestroy {
   }
 
 
+  // fetches restaurant info
   getRestaurantInfo(params: InputParams) {
 
     this.ZomatoAPIServiceSubscription = this._zomatoApiService.searchRestaurant(params).subscribe(
       restaurants => {
         this.restaurants = restaurants;
-        console.log(this.restaurants);
-        console.log(this.restaurants);
       } , (err: any) => {
         console.log(err);
       });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.ZomatoAPIServiceSubscription.unsubscribe();
   }
 }

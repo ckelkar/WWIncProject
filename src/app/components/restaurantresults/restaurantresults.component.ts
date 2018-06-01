@@ -9,10 +9,11 @@ import {ISubscription} from 'rxjs/Subscription';
 })
 export class RestaurantresultsComponent implements OnInit, OnDestroy {
 
-  @Input() restaurants;
+  @Input() restaurants; // filtered restaurant results from API
   constructor(private _dataPassingService: DatapassingService) { }
 
-  private dataPassingServiceSubscription: ISubscription;
+  private dataPassingServiceSubscription: ISubscription; // checks for the flag from other child which clears the display list
+
   ngOnInit() {
     this.dataPassingServiceSubscription = this._dataPassingService.triggeNullify.subscribe(flag => {
        if (flag) {

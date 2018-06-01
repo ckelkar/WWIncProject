@@ -7,7 +7,7 @@ export class InputParams {
   public sort: string;
   constructor() {
     this.offset = 0;
-    this.limit = 10;
+    this.limit = 40;
   }
 
 
